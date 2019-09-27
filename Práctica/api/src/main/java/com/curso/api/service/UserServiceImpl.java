@@ -1,5 +1,6 @@
 package com.curso.api.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -45,6 +46,24 @@ public class UserServiceImpl implements UserService{
 	public Optional<UserEntity> buscaPorNombre(String n) {
 		// TODO Auto-generated method stub
 		return repo.findByName(n);
+	}
+
+	@Override
+	public void actualizar(UserEntity u) {
+		// TODO Auto-generated method stub
+		repo.saveAndFlush(u);
+	}
+
+	@Override
+	public void eliminar(Integer id) {
+		// TODO Auto-generated method stub
+		repo.deleteById(id);
+	}
+
+	@Override
+	public List<UserEntity> buscarTodo() {
+		// TODO Auto-generated method stub
+		return repo.findAll();
 	}
 
 	
