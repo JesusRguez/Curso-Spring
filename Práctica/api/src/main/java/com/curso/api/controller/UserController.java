@@ -28,6 +28,10 @@ public class UserController {
 	@Autowired private MapperService<UserEntity, UserDto> userEntityMapper;
 	@Autowired private MapperService<UserDto, UserEntity> userDtoMapper;
 	
+	/**
+	 * Método para buscar a todos los usuarios en la base de datos
+	 * @return Devuevle una lista de UserDto con todos los usuarios de la base de datos
+	 */
 	@SuppressWarnings("null")
 	@GetMapping
 	public List<UserDto> findAll() {
@@ -39,6 +43,11 @@ public class UserController {
 		return listaD;		
 	}
 	
+	/**
+	 * Método para buscar un usuario por id
+	 * @param id
+	 * @return Devuelve el usuario de la base de datos cuyo id es el parámetro id
+	 */
 	@GetMapping("/{id}")
 	public UserDto findOne(@PathVariable("id") Integer id) {
 		java.util.Optional<UserEntity> u = userService.buscar(id);
@@ -47,6 +56,11 @@ public class UserController {
 		return d;
 	}
 	
+	/**
+	 * Método para actualizar un usuario dentro de la base de datos
+	 * @param id
+	 * @param UserDto userDto
+	 */
 	@PutMapping("/{id}")
 	public void update(@PathVariable("id") Integer id, @RequestBody UserDto userDto) {
 		UserEntity u = userDtoMapper.map(userDto);
@@ -54,6 +68,11 @@ public class UserController {
 		userService.actualizar(u);
 	}
 	
+	/**
+	 * Método para crear un usuario en la base de datos
+	 * @param userDto
+	 * @return Devuelve el UserDto creado
+	 */
 	@PostMapping
 	public UserDto create(@RequestBody @Valid UserDto userDto) {
 		UserEntity u = userDtoMapper.map(userDto);
@@ -62,6 +81,10 @@ public class UserController {
 		return d;
 	}
 	
+	/**
+	 * Método para borrar un usuario de la base de datos por id
+	 * @param id
+	 */
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		userService.eliminar(id);

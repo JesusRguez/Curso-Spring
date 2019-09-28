@@ -18,25 +18,20 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserEntity guardar(UserEntity u) {
-		// TODO Auto-generated method stub
-		//Mirar que el que llegue no sea nulo
 		return repo.save(u);
 	}
 
 	@Override
 	public Optional<UserEntity> buscar(Integer id) {
-		// TODO Auto-generated method stub
 		Optional<UserEntity> u = repo.findById(id);
 		return u;
 	}
 
 	@Override
 	public UserEntity findByIdNotSafe(Integer id) {
-		// TODO Auto-generated method stub
 		try {
 			return repo.getOne(id);
 		} catch (EntityNotFoundException e) {
-			// TODO: handle exception
 			System.out.println("Fallo en findByIdNotSafe");
 		}
 		return new UserEntity();
@@ -44,28 +39,21 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Optional<UserEntity> buscaPorNombre(String n) {
-		// TODO Auto-generated method stub
 		return repo.findByName(n);
 	}
 
 	@Override
 	public void actualizar(UserEntity u) {
-		// TODO Auto-generated method stub
 		repo.saveAndFlush(u);
 	}
 
 	@Override
 	public void eliminar(Integer id) {
-		// TODO Auto-generated method stub
 		repo.deleteById(id);
 	}
 
 	@Override
 	public List<UserEntity> buscarTodo() {
-		// TODO Auto-generated method stub
 		return repo.findAll();
 	}
-
-	
-
 }

@@ -29,14 +29,21 @@ public class ApiApplication implements CommandLineRunner{
 		pepe.setName("Pepe");
 		pepe.setAge(25);
 		
-		final UserEntity pepeStored = userService.guardar(pepe);
+		Role t = new Role();
+		t.setName("user");
+		pepe.setRole(t);
+		
+		roleService.guardar(t);
+		userService.guardar(pepe);
 		//log.info("Usuario guardado: {}", pepeStored);
 		
 		
-		Optional<UserEntity> u = userService.buscar(1);
+		//Optional<UserEntity> u = userService.buscar(1);
 		
+		String nuevo = userService.buscar(1).map(x->x.getName()).map(x->x.toUpperCase()).orElse("");
+		System.out.println(nuevo);
 		
-		System.out.println(u.get().toString());
+		//System.out.println(u.get().toString());
 		
 		
 		String nuevoPepe = userService.buscaPorNombre("Pepe").map(x->x.getName()).map(x->x.toUpperCase()).orElse("");

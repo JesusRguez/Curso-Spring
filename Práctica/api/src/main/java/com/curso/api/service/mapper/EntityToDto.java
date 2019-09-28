@@ -11,7 +11,6 @@ public class EntityToDto implements MapperService<UserEntity, UserDto>{
 
 	@Override
 	public UserDto map(UserEntity in) {
-		// TODO Auto-generated method stub
 		UserDto u = new UserDto(in.getId(), in.getName(), in.getAge());
 		/*
 		int edad = 0;

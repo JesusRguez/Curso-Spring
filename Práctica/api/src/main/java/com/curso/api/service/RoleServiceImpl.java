@@ -15,7 +15,6 @@ public class RoleServiceImpl implements RoleService{
 	
 	@Override
 	public Optional<Role> guardar(Role r) {
-		// TODO Auto-generated method stub
 		return Optional.ofNullable(repo.save(r));
 	}
 
