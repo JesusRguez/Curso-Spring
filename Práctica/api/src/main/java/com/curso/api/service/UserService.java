@@ -58,5 +58,10 @@ public interface UserService {
 	 */
 	public void eliminar(Integer id);
 	
+	/**
+	 * Método que busca a todos los usuarios de la base de datos y recibe un objeto Pageable
+	 * @param page
+	 * @return Devuelve una paginación con los usuarios de la base de datos
+	 */
 	public Page<UserEntity> buscarTodo(Pageable page);
 }

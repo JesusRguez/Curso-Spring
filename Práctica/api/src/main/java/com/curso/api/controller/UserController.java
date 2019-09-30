@@ -1,7 +1,5 @@
 package com.curso.api.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.curso.api.exception.NotFoundException;
 import com.curso.api.exception.ValidationException;
+import com.curso.api.model.dto.RoleDto;
 import com.curso.api.model.dto.UserDto;
-import com.curso.api.model.entity.Role;
+import com.curso.api.model.entity.RoleEntity;
 import com.curso.api.model.entity.UserEntity;
-import com.curso.api.repository.RoleRepository;
+import com.curso.api.service.RoleService;
 import com.curso.api.service.UserService;
 import com.curso.api.service.mapper.MapperService;
 
@@ -31,27 +30,27 @@ import com.curso.api.service.mapper.MapperService;
 @RequestMapping("/user")
 public class UserController {
 	
-	@Autowired private RoleRepository roleRepository;
+	@Autowired private RoleService roleService;
+	@Autowired private MapperService<RoleEntity, RoleDto> roleEntityMapper;
+	@Autowired private MapperService<RoleDto, RoleEntity> roleDtoMapper;
+	
 	@Autowired private UserService userService;
 	@Autowired private MapperService<UserEntity, UserDto> userEntityMapper;
 	@Autowired private MapperService<UserDto, UserEntity> userDtoMapper;
 	
 	/**
 	 * Método para buscar a todos los usuarios en la base de datos
-	 * @return Devuevle una lista pagina da de UserDto con todos los usuarios de la base de datos
+	 * @param page
+	 * @param size
+	 * @param name
+	 * @return Devuevle una lista paginada de UserDto con todos los usuarios de la base de datos
 	 */
-	//@SuppressWarnings("null")
 	@GetMapping
 	public Page<UserDto> findAll (@RequestParam(name = "page", required = false, defaultValue="0")Integer page,
 			@RequestParam(name = "size", required = false, defaultValue = "15") Integer size,
 			@RequestParam(name ="name", required = false) String name){
 		final Pageable pageable = PageRequest.of(page, size);
 		return userService.buscarTodo(pageable).map(x -> userEntityMapper.map(x));
-	}
-	
-	@GetMapping("/rol")
-	public List<Role> findAllRole (){
-		return roleRepository.findAll();
 	}
 	
 	/**
@@ -101,7 +100,7 @@ public class UserController {
 	public void delete(@PathVariable("id") Integer id) {
 		userService.eliminar(id);
 	}
-	/*
+	
 	@PostMapping("/{id}/role/{idRole}")
 	public RoleDto createRole(@RequestBody @Valid RoleDto roleDto) {
 		RoleEntity r = roleDtoMapper.map(roleDto);
@@ -111,8 +110,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}/role")
-	public void deleteRole(@PathVariable("id") Role r) {
+	public void deleteRole(@PathVariable("id") RoleEntity r) {
 		roleService.eliminar(r);
 	}
-	*/
 }

@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.curso.api.model.entity.Role;
+import com.curso.api.model.entity.RoleEntity;
 import com.curso.api.model.entity.UserEntity;
 import com.curso.api.service.RoleService;
 import com.curso.api.service.UserService;
@@ -25,11 +25,11 @@ public class ApiApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Role r = new Role();
+		RoleEntity r = new RoleEntity();
 		r.setName("admin");
 		roleService.guardar(r);
 		
-		Role t = new Role();
+		RoleEntity t = new RoleEntity();
 		t.setName("user");
 		roleService.guardar(t);
 		

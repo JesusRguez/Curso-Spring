@@ -7,7 +7,7 @@ import com.curso.api.model.entity.UserEntity;
 
 @Service
 
-public class EntityToDto implements MapperService<UserEntity, UserDto>{
+public class UserEntityToDto implements MapperService<UserEntity, UserDto>{
 
 	@Override
 	public UserDto map(UserEntity in) {

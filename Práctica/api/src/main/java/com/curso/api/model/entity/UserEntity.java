@@ -12,20 +12,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name ="User")
 public class UserEntity {
+	@Override
+	public String toString() {
+		return "UserEntity [id=" + id + ", name=" + name + ", age=" + age + ", role=" + role + "]";
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(unique = true)
 	private String name;
 	private Integer age;
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Role role;
+	private RoleEntity role;
 	
 	/**
 	 * Método para devolver el rol
 	 * @return Devuelve el rol de un UserEntity
 	 */
-	public Role getRole() {
+	public RoleEntity getRole() {
 		return role;
 	}
 
@@ -33,7 +38,7 @@ public class UserEntity {
 	 * Método para establecer el rol de un UserEntity
 	 * @param role
 	 */
-	public void setRole(Role role) {
+	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
 

@@ -8,9 +8,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name ="Role")
-public class Role {
+public class RoleEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	
