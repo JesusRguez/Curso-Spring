@@ -6,8 +6,11 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.curso.api.exception.ValidationException;
 import com.curso.api.model.entity.UserEntity;
 import com.curso.api.repository.UserRepository;
 
@@ -17,8 +20,13 @@ public class UserServiceImpl implements UserService{
 	@Autowired private UserRepository repo;	
 	
 	@Override
-	public UserEntity guardar(UserEntity u) {
-		return repo.save(u);
+	public UserEntity guardar(UserEntity u) throws ValidationException {
+		if (u.getAge()<18) {
+			throw new ValidationException("Eres muy peque");
+		} else {
+			return repo.save(u);
+		}
+		
 	}
 
 	@Override
@@ -55,5 +63,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<UserEntity> buscarTodo() {
 		return repo.findAll();
+	}
+
+	@Override
+	public Page<UserEntity> buscarTodo(Pageable page) {
+		return repo.findAll(page);
 	}
 }

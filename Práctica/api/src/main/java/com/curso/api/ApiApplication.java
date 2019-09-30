@@ -24,16 +24,20 @@ public class ApiApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		UserEntity pepe = new UserEntity();
-		pepe.setName("Pepe");
-		pepe.setAge(25);
+		
+		Role r = new Role();
+		r.setName("admin");
+		roleService.guardar(r);
 		
 		Role t = new Role();
 		t.setName("user");
+		roleService.guardar(t);
+		
+		UserEntity pepe = new UserEntity();
+		pepe.setName("Pepe");
+		pepe.setAge(35);
 		pepe.setRole(t);
 		
-		roleService.guardar(t);
 		userService.guardar(pepe);
 		//log.info("Usuario guardado: {}", pepeStored);
 		
@@ -43,20 +47,14 @@ public class ApiApplication implements CommandLineRunner{
 		String nuevo = userService.buscar(1).map(x->x.getName()).map(x->x.toUpperCase()).orElse("");
 		System.out.println(nuevo);
 		
-		//System.out.println(u.get().toString());
-		
-		
 		String nuevoPepe = userService.buscaPorNombre("Pepe").map(x->x.getName()).map(x->x.toUpperCase()).orElse("");
 		System.out.println(nuevoPepe);
 		
 		UserEntity juan = new UserEntity();
 		juan.setName("Juan");
 		juan.setAge(25);
-		Role r = new Role();
-		r.setName("admin");
 		juan.setRole(r);
 		
-		roleService.guardar(r);
 		userService.guardar(juan);
 	}
 
