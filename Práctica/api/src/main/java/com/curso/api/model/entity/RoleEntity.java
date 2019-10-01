@@ -13,7 +13,7 @@ public class RoleEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	
+
 	/**
 	 * Método para obtener el nombre
 	 * @return Devuelve el nombrede un Role

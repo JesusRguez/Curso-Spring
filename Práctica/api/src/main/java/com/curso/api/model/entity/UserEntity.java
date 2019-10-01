@@ -12,10 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name ="User")
 public class UserEntity {
-	@Override
-	public String toString() {
-		return "UserEntity [id=" + id + ", name=" + name + ", age=" + age + ", role=" + role + "]";
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

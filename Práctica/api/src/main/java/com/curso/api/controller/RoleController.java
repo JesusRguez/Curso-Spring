@@ -1,5 +1,7 @@
 package com.curso.api.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ import com.curso.api.service.RoleService;
 import com.curso.api.service.mapper.MapperService;
 
 @RestController
-@RequestMapping("/rol")
+@RequestMapping("/role")
 public class RoleController {
 
 	@Autowired private RoleService roleService;
@@ -44,11 +46,25 @@ public class RoleController {
 	}
 	
 	/**
+	 * Método para buscar un rol por id
+	 * @param id
+	 * @return Devuelve el rol de la base de datos cuyo id es el parámetro id
+	 * @throws NotFoundException 
+	 */
+	/*@GetMapping("/{id}")
+	public RoleDto findOne(@PathVariable("id") Integer id) {
+		Optional<RoleEntity> u = roleService.buscar(id);//.orElseThrow(() -> new NotFoundException("Rol con ID "+id+" no encontrado"));
+		RoleEntity r = u.get();
+		RoleDto d = new RoleDto(r.getId(), r.getName());
+		return d;
+	}*/
+	
+	/**
 	 * Método para actualizar un rol en la base de datos
 	 * @param id
 	 * @param roleDto
 	 */
-	@GetMapping("/{role}")
+	@GetMapping("/{id}")
 	public void update(@PathVariable("role") Integer id, @RequestBody RoleDto roleDto) {
 		RoleEntity r = roleDtoMapper.map(roleDto);
 		r.setId(id);
@@ -72,7 +88,7 @@ public class RoleController {
 	 * Método para borrar un rol de la base de datos por id
 	 * @param id
 	 */
-	@DeleteMapping("/{role}")
+	@DeleteMapping("/{id}")
 	public void delete(@PathVariable("role") Integer id) {
 		roleService.eliminar(id);
 	}
