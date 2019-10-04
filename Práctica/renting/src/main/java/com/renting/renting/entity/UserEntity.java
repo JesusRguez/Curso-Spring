@@ -1,22 +1,26 @@
 package com.renting.renting.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name ="User")
 public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	@OneToMany(fetch = FetchType.LAZY)
-	private CarEntity car;
-	@OneToMany(fetch = FetchType.LAZY)
-	private RentEntity rent;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private List<CarEntity> cars;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rent")
+	private List<RentEntity> rent;
 
 	/**
 	 * Constructor vacío de UserEntity
@@ -30,10 +34,10 @@ public class UserEntity {
 	 * @param car
 	 * @param rent
 	 */
-	public UserEntity(Integer id, String name, CarEntity car, RentEntity rent) {
+	public UserEntity(Integer id, String name, List<CarEntity> cars, List<RentEntity> rent) {
 		this.id = id;
 		this.name = name;
-		this.car = car;
+		this.cars = cars;
 		this.rent = rent;
 	}
 
@@ -73,23 +77,23 @@ public class UserEntity {
 	 * Método para obtener el coche
 	 * @return Devuelve el coche de un usuario
 	 */
-	public CarEntity getCar() {
-		return car;
+	public List<CarEntity> getCar() {
+		return cars;
 	}
 
 	/**
 	 * Método para establecer el coche de un usuario
 	 * @param car
 	 */
-	public void setCar(CarEntity car) {
-		this.car = car;
+	public void setCar(List<CarEntity> cars) {
+		this.cars = cars;
 	}
 	
 	/**
 	 * Método para obtener el alquiler
 	 * @return Devuelve el alquiler de un usuario
 	 */
-	public RentEntity getRent() {
+	public List<RentEntity> getRent() {
 		return rent;
 	}
 
@@ -97,7 +101,7 @@ public class UserEntity {
 	 * Método para establecer el alquiler de un usuario
 	 * @param rent
 	 */
-	public void setRent(RentEntity rent) {
+	public void setRent(List<RentEntity> rent) {
 		this.rent = rent;
 	}
 }

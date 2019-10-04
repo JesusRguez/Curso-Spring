@@ -1,5 +1,7 @@
 package com.renting.renting.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name ="Car")
 public class CarEntity {
 
 	@Id
@@ -18,8 +22,8 @@ public class CarEntity {
 	private String brand;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEntity user;
-	@OneToMany(fetch = FetchType.LAZY)
-	private RentEntity rent;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rent")
+	private List<RentEntity> rents;
 	
 	/**
 	 * Constructor vacío de CarEntity
@@ -34,12 +38,12 @@ public class CarEntity {
 	 * @param user
 	 * @param rent
 	 */
-	public CarEntity(Integer id, String model, String brand, UserEntity user, RentEntity rent) {
+	public CarEntity(Integer id, String model, String brand, UserEntity user, List<RentEntity> rents) {
 		this.id = id;
 		this.model = model;
 		this.brand = brand;
 		this.user = user;
-		this.rent = rent;
+		this.rents = rents;
 	}
 
 	/**
@@ -110,15 +114,15 @@ public class CarEntity {
 	 * Método para obtener el alquiler
 	 * @return Devuelve el alquiler de un coche
 	 */
-	public RentEntity getRent() {
-		return rent;
+	public List<RentEntity> getRent() {
+		return rents;
 	}
 
 	/**
 	 * Método para establecer el alquiler de un coche
 	 * @param rent
 	 */
-	public void setRent(RentEntity rent) {
-		this.rent = rent;
+	public void setRent(List<RentEntity> rent) {
+		this.rents = rent;
 	}
 }
