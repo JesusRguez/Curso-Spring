@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.renting.renting.entity.UserEntity;
+import com.renting.renting.exception.ValidationException;
 
 
 public interface UserService {
@@ -13,8 +14,9 @@ public interface UserService {
 	 * Método para guardar un UserEntity en la base de datos
 	 * @param u
 	 * @return Devuelve un UserEntity
+	 * @throws ValidationException 
 	 */
-	public UserEntity guardar(UserEntity u);
+	public UserEntity guardar(UserEntity u) throws ValidationException;
 	
 	/**
 	 * Método para buscar un UserEntity por id en la base de datos

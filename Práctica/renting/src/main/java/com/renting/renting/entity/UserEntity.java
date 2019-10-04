@@ -17,6 +17,7 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	private Integer age;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<CarEntity> cars;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rent")
@@ -34,9 +35,10 @@ public class UserEntity {
 	 * @param car
 	 * @param rent
 	 */
-	public UserEntity(Integer id, String name, List<CarEntity> cars, List<RentEntity> rent) {
+	public UserEntity(Integer id, String name, Integer age, List<CarEntity> cars, List<RentEntity> rent) {
 		this.id = id;
 		this.name = name;
+		this.age = age;
 		this.cars = cars;
 		this.rent = rent;
 	}
@@ -71,6 +73,22 @@ public class UserEntity {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Método para devolver la edad
+	 * @return Devuelve la edad de un usuario
+	 */
+	public Integer getAge() {
+		return age;
+	}
+
+	/**
+	 * Método para establecer la edad de un usuario
+	 * @param age
+	 */
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 	/**

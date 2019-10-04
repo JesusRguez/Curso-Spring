@@ -1,13 +1,17 @@
 package com.renting.renting.dto;
 
+import java.util.List;
+
 import com.renting.renting.entity.CarEntity;
 import com.renting.renting.entity.RentEntity;
 
 public class UserDto {
+	
 	private Integer id;
 	private String name;
-	private CarEntity car;
-	private RentEntity rent;
+	private Integer age;
+	private List<CarEntity> cars;
+	private List<RentEntity> rents;
 
 	/**
 	 * Constructor vacío de UserDto
@@ -21,11 +25,12 @@ public class UserDto {
 	 * @param car
 	 * @param rent
 	 */
-	public UserDto(Integer id, String name, CarEntity car, RentEntity rent) {
+	public UserDto(Integer id, String name, Integer age, List<CarEntity> cars, List<RentEntity> rents) {
 		this.id = id;
 		this.name = name;
-		this.car = car;
-		this.rent = rent;
+		this.age = age;
+		this.cars = cars;
+		this.rents = rents;
 	}
 
 	/**
@@ -59,36 +64,52 @@ public class UserDto {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/**
+	 * Método para devolver la edad
+	 * @return Devuelve la edad de un usuario
+	 */
+	public Integer getAge() {
+		return age;
+	}
+
+	/**
+	 * Método para establecer la edad de un usuario
+	 * @param age
+	 */
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 
 	/**
 	 * Método para obtener el coche
 	 * @return Devuelve el coche de un usuario
 	 */
-	public CarEntity getCar() {
-		return car;
+	public List<CarEntity> getCar() {
+		return cars;
 	}
 
 	/**
 	 * Método para establecer el coche de un usuario
 	 * @param car
 	 */
-	public void setCar(CarEntity car) {
-		this.car = car;
+	public void setCar(List<CarEntity> cars) {
+		this.cars = cars;
 	}
 	
 	/**
 	 * Método para obtener el alquiler
 	 * @return Devuelve el alquiler de un usuario
 	 */
-	public RentEntity getRent() {
-		return rent;
+	public List<RentEntity> getRent() {
+		return rents;
 	}
-
+	
 	/**
 	 * Método para establecer el alquiler de un usuario
 	 * @param rent
 	 */
-	public void setRent(RentEntity rent) {
-		this.rent = rent;
+	public void setRent(List<RentEntity> rents) {
+		this.rents = rents;
 	}
 }

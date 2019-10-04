@@ -1,7 +1,5 @@
 package com.renting.renting.controller;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.renting.renting.dto.UserDto;
 import com.renting.renting.entity.UserEntity;
+import com.renting.renting.exception.NotFoundException;
+import com.renting.renting.exception.ValidationException;
 import com.renting.renting.service.UserService;
 import com.renting.renting.service.mapper.MapperService;
 
@@ -53,11 +53,9 @@ public class UserController {
 	 * @throws NotFoundException 
 	 */
 	@GetMapping("/{id}")
-	public UserDto findOne(@PathVariable("id") Integer id) {
-		//UserEntity u = userService.buscar(id).orElseThrow(() -> new NotFoundException("Usuario con ID "+id+" no encontrado"));
-		Optional<UserEntity> user = userService.buscar(id);
-		UserEntity u = user.get();
-		UserDto d = new UserDto(u.getId(), u.getName(), u.getCar(), u.getRent());
+	public UserDto findOne(@PathVariable("id") Integer id) throws NotFoundException {
+		UserEntity u = userService.buscar(id).orElseThrow(() -> new NotFoundException("Usuario con ID "+id+" no encontrado"));
+		UserDto d = new UserDto(u.getId(), u.getName(), u.getAge(), u.getCar(), u.getRent());
 		return d;
 	}
 	
@@ -80,7 +78,7 @@ public class UserController {
 	 * @throws ValidationException 
 	 */
 	@PostMapping
-	public UserDto create(@RequestBody @Valid UserDto userDto){
+	public UserDto create(@RequestBody @Valid UserDto userDto) throws ValidationException{
 		UserEntity u = userDtoToEntityMapper.map(userDto);
 		UserDto d = userEntityToDtoMapper.map(u);
 		userService.guardar(u);

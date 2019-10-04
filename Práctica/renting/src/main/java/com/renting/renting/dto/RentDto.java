@@ -6,6 +6,8 @@ import com.renting.renting.entity.CarEntity;
 import com.renting.renting.entity.UserEntity;
 
 public class RentDto {
+	
+	private Integer idRent;
 	private UserEntity user;
 	private CarEntity car;
 	private Date initDate;
@@ -25,12 +27,29 @@ public class RentDto {
 	 * @param finalDate
 	 * @param price
 	 */
-	public RentDto(UserEntity user, CarEntity car, Date initDate, Date finalDate, Double price) {
+	public RentDto(Integer idRent, UserEntity user, CarEntity car, Date initDate, Date finalDate, Double price) {
+		this.idRent = idRent;
 		this.user = user;
 		this.car = car;
 		this.initDate = initDate;
 		this.finalDate = finalDate;
 		this.price = price;
+	}
+
+	/**
+	 * Método para obtener el id
+	 * @return Devuelve el id de un alquiler
+	 */
+	public Integer getIdRent() {
+		return idRent;
+	}
+
+	/**
+	 * Método para establecer el id de un alquiler
+	 * @param idRent
+	 */
+	public void setIdRent(Integer idRent) {
+		this.idRent = idRent;
 	}
 
 	/**

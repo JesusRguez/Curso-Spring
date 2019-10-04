@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.renting.renting.entity.UserEntity;
+import com.renting.renting.exception.ValidationException;
 import com.renting.renting.repository.UserRepository;
 
 @Service
@@ -16,9 +17,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired UserRepository userRepository;
 
 	@Override
-	public UserEntity guardar(UserEntity u) {
-		UserEntity user = userRepository.save(u);
-		return user;
+	public UserEntity guardar(UserEntity u) throws ValidationException{
+		if (u.getAge()<18) {
+			throw new ValidationException("Tienes que ser mayor de 18 años para registrarte en el sistema");
+		} else {
+			return userRepository.save(u);
+		}
 	}
 
 	@Override

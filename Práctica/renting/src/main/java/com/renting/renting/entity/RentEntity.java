@@ -37,12 +37,29 @@ public class RentEntity {
 	 * @param finalDate
 	 * @param price
 	 */
-	public RentEntity(UserEntity user, CarEntity car, Date initDate, Date finalDate, Double price) {
+	public RentEntity(Integer idRent, UserEntity user, CarEntity car, Date initDate, Date finalDate, Double price) {
+		this.idRent = idRent;
 		this.user = user;
 		this.car = car;
 		this.initDate = initDate;
 		this.finalDate = finalDate;
 		this.price = price;
+	}
+	
+	/**
+	 * Método para obtener el id
+	 * @return Devuelve el id de un alquiler
+	 */
+	public Integer getIdRent() {
+		return idRent;
+	}
+
+	/**
+	 * Método para establecer el id de un alquiler
+	 * @param idRent
+	 */
+	public void setIdRent(Integer idRent) {
+		this.idRent = idRent;
 	}
 
 	/**

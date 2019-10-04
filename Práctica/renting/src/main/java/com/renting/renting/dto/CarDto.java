@@ -1,5 +1,7 @@
 package com.renting.renting.dto;
 
+import java.util.List;
+
 import com.renting.renting.entity.RentEntity;
 import com.renting.renting.entity.UserEntity;
 
@@ -9,7 +11,7 @@ public class CarDto {
 	private String model;
 	private String brand;
 	private UserEntity user;
-	private RentEntity rent;
+	private List<RentEntity> rents;
 	
 	/**
 	 * Constructor vacío de CarDto
@@ -24,12 +26,12 @@ public class CarDto {
 	 * @param user
 	 * @param rent
 	 */
-	public CarDto(Integer id, String model, String brand, UserEntity user, RentEntity rent) {
+	public CarDto(Integer id, String model, String brand, UserEntity user, List<RentEntity> rents) {
 		this.id = id;
 		this.model = model;
 		this.brand = brand;
 		this.user = user;
-		this.rent = rent;
+		this.rents = rents;
 	}
 
 	/**
@@ -98,17 +100,17 @@ public class CarDto {
 
 	/**
 	 * Método para obtener el alquiler
-	 * @return Devuelve el alquiler de un coche
+	 * @return Devuelve los alquileres de un coche
 	 */
-	public RentEntity getRent() {
-		return rent;
+	public List<RentEntity> getRent() {
+		return rents;
 	}
 
 	/**
-	 * Método para establecer el alquiler de un coche
-	 * @param rent
+	 * Método para establecer los alquileres de un coche
+	 * @param list
 	 */
-	public void setRent(RentEntity rent) {
-		this.rent = rent;
+	public void setRent(List<RentEntity> list) {
+		this.rents = list;
 	}
 }

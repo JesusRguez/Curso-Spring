@@ -1,9 +1,5 @@
 package com.renting.renting.controller;
 
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.renting.renting.dto.CarDto;
-import com.renting.renting.dto.UserDto;
 import com.renting.renting.entity.CarEntity;
-import com.renting.renting.entity.UserEntity;
+import com.renting.renting.exception.NotFoundException;
 import com.renting.renting.service.CarService;
 import com.renting.renting.service.mapper.MapperService;
 
@@ -34,11 +29,11 @@ public class CarController {
 	@Autowired private MapperService<CarDto, CarEntity> carDtoToEntityMapper;
 	
 	/**
-	 * Método para buscar a todos los usuarios en la base de datos
+	 * Método para buscar a todos los coches en la base de datos
 	 * @param page
 	 * @param size
 	 * @param name
-	 * @return Devuelve una lista paginada de todos los usuarios de la base de datos
+	 * @return Devuelve una lista paginada de todos los coches de la base de datos
 	 */
 	@GetMapping
 	public Page<CarDto> findAll (@RequestParam(name = "page", required = false, defaultValue="0")Integer page,
@@ -49,52 +44,49 @@ public class CarController {
 	}
 	
 	/**
-	 * Método para buscar un usuario por id
+	 * Método para buscar un cohce por id
 	 * @param id
-	 * @return Devuelve el usuario de la base de datos cuyo id es el parámetro id
+	 * @return Devuelve el coche de la base de datos cuyo id es el parámetro id
 	 * @throws NotFoundException 
 	 */
 	@GetMapping("/{id}")
-	public CarDto findOne(@PathVariable("id") Integer id) {
-		//UserEntity u = userService.buscar(id).orElseThrow(() -> new NotFoundException("Usuario con ID "+id+" no encontrado"));
-		Optional<CarEntity> car = carService.buscar(id);
-		CarEntity c = car.get();
-		CarDto d = new CarDto(/*ponerle los datitos para que se cree el cochecito dto*/);
+	public CarDto findOne(@PathVariable("id") Integer id) throws NotFoundException {
+		CarEntity c = carService.buscar(id).orElseThrow(() -> new NotFoundException("Coche con ID "+id+" no encontrado"));
+		CarDto d = new CarDto(c.getId(), c.getModel(), c.getBrand(), c.getUser(), c.getRent());
 		return d;
 	}
 	
 	/**
-	 * Método para actualizar un usuario dentro de la base de datos
+	 * Método para actualizar un coche dentro de la base de datos
 	 * @param id
-	 * @param UserDto userDto
+	 * @param carDto
 	 */
 	@PutMapping("/{id}")
-	public void update(@PathVariable("id") Integer id, @RequestBody UserDto userDto) {
-		UserEntity u = userDtoToEntityMapper.map(userDto);
-		u.setId(id);
-		userService.actualizar(u);
+	public void update(@PathVariable("id") Integer id, @RequestBody CarDto carDto) {
+		CarEntity c = carDtoToEntityMapper.map(carDto);
+		c.setId(id);
+		carService.actualizar(c);
 	}
 	
 	/**
-	 * Método para crear un usuario en la base de datos
+	 * Método para crear un coche en la base de datos
 	 * @param userDto
-	 * @return Devuelve el UserDto creado
-	 * @throws ValidationException 
+	 * @return Devuelve el CarrDto creado
 	 */
 	@PostMapping
-	public UserDto create(@RequestBody @Valid UserDto userDto){
-		UserEntity u = userDtoToEntityMapper.map(userDto);
-		UserDto d = userEntityToDtoMapper.map(u);
-		userService.guardar(u);
+	public CarDto create(@RequestBody CarDto carDto) {
+		CarEntity c = carDtoToEntityMapper.map(carDto);
+		CarDto d = carEntityToDtoMapper.map(c);
+		carService.guardar(c);
 		return d;
 	}
 	
 	/**
-	 * Método para borrar un usuario de la base de datos por id
+	 * Método para borrar un coche de la base de datos por id
 	 * @param id
 	 */
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable("id") Integer id) {
-		userService.eliminar(id);
+		carService.eliminar(id);
 	}
 }
