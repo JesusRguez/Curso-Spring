@@ -22,7 +22,7 @@ public class CarEntity {
 	private String brand;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEntity user;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rent")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
 	private List<RentEntity> rents;
 	
 	/**
