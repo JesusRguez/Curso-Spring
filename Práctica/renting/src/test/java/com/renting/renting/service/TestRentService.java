@@ -19,16 +19,17 @@ private final static Integer RENT_ID = 1;
 	
 	@Mock private RentRepository rentRepository;
 	
-	@Test
+	//@Test
 	public void testBuscarTodosFound() {
 		
-	}	
-	@Test
+	}
+	
+	//@Test
 	public void testBuscarTodosNotFound() {
 		
 	}
 	
-	@Test
+	//@Test
 	public void buscarIdFound() {
 		final RentEntity rentEmtity = new RentEntity();
 		Mockito.when(rentRepository.findById(RENT_ID)).thenReturn(Optional.ofNullable(rentEmtity));
@@ -37,7 +38,7 @@ private final static Integer RENT_ID = 1;
 		Assert.assertNotNull(rent.get());
 	}
 	
-	@Test
+	//@Test
 	public void buscarIdNotFound() {
 		Mockito.when(rentRepository.findById(RENT_ID)).thenReturn(Optional.empty());
 		final Optional<RentEntity> rent = rentService.buscar(RENT_ID);
@@ -46,32 +47,32 @@ private final static Integer RENT_ID = 1;
 		Assert.assertFalse(rent.isPresent());
 	}
 	
-	@Test
+	//@Test
 	public void testGuardarOk() {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testGuardarKo() {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testActualizarOk() {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testActualizarKo() {
 		
 	}
 	
-	@Test
+	//@Test
 	public void eliminarOk() {
 		
 	}
 	
-	@Test
+	//@Test
 	public void eliminarKo() {
 		
 	}
