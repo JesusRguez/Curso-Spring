@@ -46,14 +46,13 @@ public class RentController {
 	/**
 	 * Método para buscar un alquiler por id
 	 * @param id
-	 * @return Devuelve el alquiler de la base de datos cuyo id es el parámetro id
+	 * @return Devuelve el alquiler de la base de datos con ID id
 	 * @throws NotFoundException 
 	 */
 	@GetMapping("/{id}")
 	public RentDto findOne(@PathVariable("id") Integer id) throws NotFoundException {
 		RentEntity r = rentService.buscar(id).orElseThrow(() -> new NotFoundException("Alquiler con ID "+id+" no encontrado"));
-		RentDto d = new RentDto(r.getIdRent(), r.getUser(), r.getCar(), r.getInitDate(), r.getFinalDate(), r.getPrice());
-		return d;
+		return new RentDto(r.getIdRent(), r.getUser(), r.getCar(), r.getInitDate(), r.getFinalDate(), r.getPrice());
 	}
 	
 	/**

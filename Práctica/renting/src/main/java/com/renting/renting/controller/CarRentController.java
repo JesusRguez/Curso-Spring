@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.renting.renting.dto.CarDto;
@@ -36,12 +35,10 @@ public class CarRentController {
 	@Autowired private MapperService<RentDto, RentEntity> rentDtoToEntityMapper;
 	
 	/**
-	 * Método para buscar todos los alquileres del coche con ID id
-	 * @param page
-	 * @param size
-	 * @param name
-	 * @return Devuelve una lista con todos los alquileres del coche con ID id
-	 * @throws NotFoundException 
+	 * Métodopara buscar todos los alquileres de un coche
+	 * @param idCar
+	 * @return Devuelve una lista con todos los alquileres del coche con ID idCar
+	 * @throws NotFoundException
 	 */
 	@GetMapping
 	public List<RentDto> findAll (@PathVariable("idCar") Integer idCar) throws NotFoundException{
@@ -63,11 +60,10 @@ public class CarRentController {
 	@GetMapping("/{idRent}")
 	public RentDto findOne(@PathVariable("idCar") Integer idCar, @PathVariable("idRent") Integer idRent) throws NotFoundException {
 		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
-		RentEntity r = rentService.buscar(idRent).orElseThrow(() -> new NotFoundException("No he encontrado el idrent"));
+		rentService.buscar(idRent).orElseThrow(() -> new NotFoundException("Alquiler con ID "+idRent+" no encontrado"));
 		CarDto carDto = new CarDto(c.getId(), c.getModel(), c.getBrand(), c.getUser(), c.getRent());
 		RentEntity rent = carDto.getRent().get(idCar);
-		RentDto d = new RentDto(rent.getIdRent(), rent.getUser(), rent.getCar(), rent.getInitDate(), rent.getFinalDate(), rent.getPrice());
-		return d;
+		return new RentDto(rent.getIdRent(), rent.getUser(), rent.getCar(), rent.getInitDate(), rent.getFinalDate(), rent.getPrice());
 	}
 	
 	/**
@@ -90,17 +86,14 @@ public class CarRentController {
 	 * Método para crear un alquiler en la base de datos
 	 * @param idCar
 	 * @param rentDto
-	 * @return Devuelve el RentDto creado 
+	 * @return Devuelve el CarDto actualizado 
 	 * @throws NotFoundException 
 	 */
 	@PostMapping
 	public CarDto create(@PathVariable("idCar") Integer idCar, @RequestBody RentDto rentDto) throws NotFoundException {
 		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
 		c.getRent().add(rentDtoToEntityMapper.map(rentDto));
-		CarDto car = carEntityToDtoMapper.map(c);
-		car.setId(idCar);
-		carService.actualizar(c);
-		return car;
+		return carEntityToDtoMapper.map(c);
 	}
 	
 	/**

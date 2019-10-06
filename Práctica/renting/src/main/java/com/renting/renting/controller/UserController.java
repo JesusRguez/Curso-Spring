@@ -49,20 +49,19 @@ public class UserController {
 	/**
 	 * Método para buscar un usuario por id
 	 * @param id
-	 * @return Devuelve el usuario de la base de datos cuyo id es el parámetro id
+	 * @return Devuelve el usuario de la base de datos con ID id
 	 * @throws NotFoundException 
 	 */
 	@GetMapping("/{id}")
 	public UserDto findOne(@PathVariable("id") Integer id) throws NotFoundException {
 		UserEntity u = userService.buscar(id).orElseThrow(() -> new NotFoundException("Usuario con ID "+id+" no encontrado"));
-		UserDto d = new UserDto(u.getId(), u.getName(), u.getAge(), u.getCar(), u.getRent());
-		return d;
+		return new UserDto(u.getId(), u.getName(), u.getAge(), u.getCar(), u.getRent());
 	}
 	
 	/**
-	 * Método para actualizar un usuario dentro de la base de datos
+	 * Método para actualizar un usuario de la base de datos
 	 * @param id
-	 * @param UserDto userDto
+	 * @param userDto
 	 */
 	@PutMapping("/{id}")
 	public void update(@PathVariable("id") Integer id, @RequestBody UserDto userDto) {

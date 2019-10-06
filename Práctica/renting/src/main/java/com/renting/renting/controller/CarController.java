@@ -46,14 +46,13 @@ public class CarController {
 	/**
 	 * Método para buscar un cohce por id
 	 * @param id
-	 * @return Devuelve el coche de la base de datos cuyo id es el parámetro id
+	 * @return Devuelve el coche de la base de datos con ID id
 	 * @throws NotFoundException 
 	 */
 	@GetMapping("/{id}")
 	public CarDto findOne(@PathVariable("id") Integer id) throws NotFoundException {
 		CarEntity c = carService.buscar(id).orElseThrow(() -> new NotFoundException("Coche con ID "+id+" no encontrado"));
-		CarDto d = new CarDto(c.getId(), c.getModel(), c.getBrand(), c.getUser(), c.getRent());
-		return d;
+		return new CarDto(c.getId(), c.getModel(), c.getBrand(), c.getUser(), c.getRent());
 	}
 	
 	/**
@@ -70,8 +69,8 @@ public class CarController {
 	
 	/**
 	 * Método para crear un coche en la base de datos
-	 * @param userDto
-	 * @return Devuelve el CarrDto creado
+	 * @param carDto
+	 * @return Devuelve el CarDto creado
 	 */
 	@PostMapping
 	public CarDto create(@RequestBody CarDto carDto) {
