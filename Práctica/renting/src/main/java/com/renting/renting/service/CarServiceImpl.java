@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.renting.renting.entity.CarEntity;
+import com.renting.renting.entity.RentEntity;
 import com.renting.renting.repository.CarRepository;
 
 @Service
@@ -40,5 +41,10 @@ public class CarServiceImpl implements CarService{
 	@Override
 	public Page<CarEntity> buscarTodo(Pageable page) {
 		return carRepository.findAll(page);
+	}
+
+	@Override
+	public void guardarRent(CarEntity c, RentEntity r) {
+		
 	}
 }

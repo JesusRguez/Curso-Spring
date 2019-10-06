@@ -90,10 +90,9 @@ public class CarRentController {
 	 * @throws NotFoundException 
 	 */
 	@PostMapping
-	public CarDto create(@PathVariable("idCar") Integer idCar, @RequestBody RentDto rentDto) throws NotFoundException {
-		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
-		c.getRent().add(rentDtoToEntityMapper.map(rentDto));
-		return carEntityToDtoMapper.map(c);
+	public RentDto create(@PathVariable("idCar") Integer idCar, @RequestBody RentDto rentDto) throws NotFoundException {
+		//carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
+		return rentEntityToDtoMapper.map(rentService.guardarRentCar(rentDtoToEntityMapper.map(rentDto), idCar));
 	}
 	
 	/**

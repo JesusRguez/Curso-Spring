@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.renting.renting.entity.RentEntity;
+import com.renting.renting.exception.NotFoundException;
 
 public interface RentService {
 
@@ -15,6 +16,10 @@ public interface RentService {
 	 * @return Devuelve un RentEntity
 	 */
 	public RentEntity guardar(RentEntity r);
+	
+	public RentEntity guardarRentCar(RentEntity r, Integer idCar) throws NotFoundException;
+	
+	public RentEntity guardarRentUser(RentEntity r, Integer idUser);
 	
 	/**
 	 * Método para buscar un RentEntity por id en la base de datos

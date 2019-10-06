@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.renting.renting.entity.CarEntity;
+import com.renting.renting.entity.RentEntity;
 
 public interface CarService {
 
@@ -15,6 +16,8 @@ public interface CarService {
 	 * @return Devuelve un CarEntity
 	 */
 	public CarEntity guardar(CarEntity c);
+	
+	public void guardarRent(CarEntity c, RentEntity r);
 	
 	/**
 	 * Método para buscar un CarEntity por id en la base de datos
