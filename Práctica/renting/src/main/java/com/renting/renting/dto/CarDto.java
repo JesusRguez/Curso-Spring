@@ -1,5 +1,6 @@
 package com.renting.renting.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.renting.renting.entity.RentEntity;
@@ -11,7 +12,7 @@ public class CarDto {
 	private String model;
 	private String brand;
 	private UserEntity user;
-	private List<RentEntity> rents;
+	private List<RentEntity> rents = new ArrayList<>();
 	
 	/**
 	 * Constructor vacío de CarDto

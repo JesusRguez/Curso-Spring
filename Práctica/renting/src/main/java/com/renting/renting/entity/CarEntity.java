@@ -1,5 +1,6 @@
 package com.renting.renting.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class CarEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserEntity user;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
-	private List<RentEntity> rents;
+	private List<RentEntity> rents = new ArrayList<>();
 	
 	/**
 	 * Constructor vacío de CarEntity

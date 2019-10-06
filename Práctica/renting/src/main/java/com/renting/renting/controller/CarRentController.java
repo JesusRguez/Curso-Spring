@@ -1,11 +1,9 @@
 package com.renting.renting.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,18 +41,14 @@ public class CarRentController {
 	 * @param size
 	 * @param name
 	 * @return Devuelve una lista con todos los alquileres del coche con ID id
+	 * @throws NotFoundException 
 	 */
-	@SuppressWarnings("null")
 	@GetMapping
-	public List<RentDto> findAll (@RequestParam(name = "page", required = false, defaultValue="0")Integer page,
-			@RequestParam(name = "size", required = false, defaultValue = "15") Integer size,
-			@RequestParam(name ="name", required = false) String name){
-		final Pageable pageable = PageRequest.of(page, size);
-		Page<CarDto> coches = carService.buscarTodo(pageable).map(x -> carEntityToDtoMapper.map(x));
-		List<CarDto> listaCoches = coches.getContent();
-		List<RentDto> alquileres = null;
-		for (int i=0; i<listaCoches.size();++i) {
-			alquileres.add(listaCoches.get(i).getRent().hashCode(), null);
+	public List<RentDto> findAll (@PathVariable("idCar") Integer idCar) throws NotFoundException{
+		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
+		List<RentDto> alquileres = new ArrayList<>();
+		for(int i=0; i<c.getRent().size(); ++i) {
+			alquileres.add(rentEntityToDtoMapper.map(c.getRent().get(i)));
 		}
 		return alquileres;
 	}
@@ -69,6 +63,7 @@ public class CarRentController {
 	@GetMapping("/{idRent}")
 	public RentDto findOne(@PathVariable("idCar") Integer idCar, @PathVariable("idRent") Integer idRent) throws NotFoundException {
 		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
+		RentEntity r = rentService.buscar(idRent).orElseThrow(() -> new NotFoundException("No he encontrado el idrent"));
 		CarDto carDto = new CarDto(c.getId(), c.getModel(), c.getBrand(), c.getUser(), c.getRent());
 		RentEntity rent = carDto.getRent().get(idCar);
 		RentDto d = new RentDto(rent.getIdRent(), rent.getUser(), rent.getCar(), rent.getInitDate(), rent.getFinalDate(), rent.getPrice());
@@ -99,13 +94,13 @@ public class CarRentController {
 	 * @throws NotFoundException 
 	 */
 	@PostMapping
-	public RentDto create(@PathVariable("idCar") Integer idCar, @RequestBody RentDto rentDto) throws NotFoundException {
+	public CarDto create(@PathVariable("idCar") Integer idCar, @RequestBody RentDto rentDto) throws NotFoundException {
 		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
 		c.getRent().add(rentDtoToEntityMapper.map(rentDto));
-		CarDto carDto = new CarDto(c.getId(), c.getModel(), c.getBrand(), c.getUser(), c.getRent());
-		CarEntity car = carDtoToEntityMapper.map(carDto);
-		carService.guardar(car);
-		return rentDto;
+		CarDto car = carEntityToDtoMapper.map(c);
+		car.setId(idCar);
+		carService.actualizar(c);
+		return car;
 	}
 	
 	/**

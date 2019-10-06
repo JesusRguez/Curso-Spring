@@ -41,5 +41,4 @@ public class CarServiceImpl implements CarService{
 	public Page<CarEntity> buscarTodo(Pageable page) {
 		return carRepository.findAll(page);
 	}
-
 }

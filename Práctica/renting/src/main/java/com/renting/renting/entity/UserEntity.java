@@ -1,5 +1,6 @@
 package com.renting.renting.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -19,9 +20,9 @@ public class UserEntity {
 	private String name;
 	private Integer age;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private List<CarEntity> cars;
+	private List<CarEntity> cars = new ArrayList<>();
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private List<RentEntity> rent;
+	private List<RentEntity> rent = new ArrayList<>();
 
 	/**
 	 * Constructor vacío de UserEntity
