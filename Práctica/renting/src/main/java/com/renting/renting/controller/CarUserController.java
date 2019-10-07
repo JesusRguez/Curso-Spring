@@ -51,7 +51,7 @@ public class CarUserController {
 	 * @return Devuelve el usuario con ID idUser del coche con ID idCar
 	 * @throws NotFoundException
 	 */
-	@GetMapping("/{idUser)")
+	@GetMapping("/{idUser}")
 	public UserDto findOne(@PathVariable("idCar") Integer idCar, @PathVariable("idUser") Integer idUser) throws NotFoundException{
 		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
 		userService.buscar(idUser).orElseThrow(() -> new NotFoundException("Usuario con ID "+idUser+" no encontrado"));
@@ -67,7 +67,7 @@ public class CarUserController {
 	 * @param userDto
 	 * @throws NotFoundException
 	 */
-	@PutMapping("/{idUser)")
+	@PutMapping("/{idUser}")
 	public void update(@PathVariable("idCar") Integer idCar, @PathVariable("idUser") Integer idUser, @RequestBody UserDto userDto) throws NotFoundException{
 		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
 		CarDto carDto = carEntityToDtoMapper.map(c);
@@ -81,11 +81,11 @@ public class CarUserController {
 	 * Método para crear un usuario relacionado con un coche
 	 * @param idCar
 	 * @param userDto
-	 * @return
+	 * @return Devuelve el usuario modificado
 	 * @throws NotFoundException
 	 */
 	/*@PostMapping
-	public UserDto create(@PathVariable("idCa") Integer idCar, @RequestBody UserDto userDto) throws NotFoundException{
+	public UserDto create(@PathVariable("idCar") Integer idCar, @RequestBody UserDto userDto) throws NotFoundException{
 		return userEntityToDtoMapper.map(userService.guardarCar(userDtoToEntityMapper.map(userDto), idCar));
 	}*/
 	

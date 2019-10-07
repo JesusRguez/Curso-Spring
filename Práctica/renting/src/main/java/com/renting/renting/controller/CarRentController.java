@@ -54,7 +54,7 @@ public class CarRentController {
 	 * Método para buscar el alquiler de un coche por id
 	 * @param idCar
 	 * @param idRent
-	 * @return Devuelve el alquiler con ID idRent, del coche con id idCar
+	 * @return Devuelve el alquiler con ID idRent, del coche con ID idCar
 	 * @throws NotFoundException
 	 */
 	@GetMapping("/{idRent}")
