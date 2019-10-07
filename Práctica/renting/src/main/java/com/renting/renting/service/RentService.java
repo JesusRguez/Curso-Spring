@@ -1,5 +1,6 @@
 package com.renting.renting.service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -60,4 +61,14 @@ public interface RentService {
 	 * @return Devuelve una paginación con los alquieleres de la base de datos
 	 */
 	public Page<RentEntity> buscarTodo(Pageable page);
+	
+	/**
+	 * Método para calcular las ganancias de un alquiler
+	 * @param idCar
+	 * @param init
+	 * @param end
+	 * @return
+	 * @throws NotFoundException
+	 */
+	public double profit(Integer idCar, Date init, Date end) throws NotFoundException;
 }

@@ -1,5 +1,8 @@
 package com.renting.renting.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +68,20 @@ public class RentServiceImpl implements RentService{
 		user.getRent().add(r);
 		userRepository.save(user);
 		return rentRepository.save(r);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public double profit(Integer idCar, Date init, Date end) throws NotFoundException {
+		carRepository.findById(idCar).orElseThrow(() -> new NotFoundException("Coche con id "+idCar+" no enconctrado"));
+		Optional<RentEntity> alquileres = rentRepository.findById(idCar);
+		List<RentEntity> rents = new ArrayList<>();
+		rents = (List<RentEntity>) alquileres.get();
+		Double profit = 0.0;
+		for(RentEntity entity : rents) 
+			if(entity.getInitDate().after(init) && entity.getFinalDate().before(end)) {
+				profit += entity.getPrice();
+			}
+		return profit;
 	}
 }

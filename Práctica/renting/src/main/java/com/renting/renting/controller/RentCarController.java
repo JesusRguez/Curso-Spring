@@ -94,11 +94,19 @@ public class RentCarController {
 	 * @param idCar
 	 * @throws NotFoundException
 	 */
-	@DeleteMapping("/{idRent}")
+	@DeleteMapping("/{idCar}")
 	public void delete(@PathVariable("idRent") Integer idRent, @PathVariable("idCar") Integer idCar) throws NotFoundException{
 		RentEntity r = rentService.buscar(idRent).orElseThrow(() -> new NotFoundException("Alquiler con ID "+idRent+" no encontrado"));
 		carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
 		r.setCar(new CarEntity());
 		carService.eliminar(idCar);
+	}
+	
+	@GetMapping("/{idCar}/profit")
+	public double profit(@PathVariable("idRent") Integer idRent, @PathVariable("idCar") Integer idCar) throws NotFoundException{
+		RentEntity r = rentService.buscar(idRent).orElseThrow(() -> new NotFoundException("Alquiler con ID "+idRent+" no encontrado"));
+		carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
+		Double profit = rentService.profit(idCar, r.getInitDate(), r.getFinalDate());
+		return profit;
 	}
 }
