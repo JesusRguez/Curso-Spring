@@ -35,7 +35,7 @@ public class CarRentController {
 	@Autowired private MapperService<RentDto, RentEntity> rentDtoToEntityMapper;
 	
 	/**
-	 * Métodopara buscar todos los alquileres de un coche
+	 * Método para buscar todos los alquileres de un coche
 	 * @param idCar
 	 * @return Devuelve una lista con todos los alquileres del coche con ID idCar
 	 * @throws NotFoundException
@@ -67,7 +67,7 @@ public class CarRentController {
 	}
 	
 	/**
-	 * Método para actualizar un alquiler dentro de la base de datos
+	 * Método para actualizar el coche de un alquiler
 	 * @param idCar
 	 * @param idRent
 	 * @param rentDto
@@ -77,26 +77,26 @@ public class CarRentController {
 	public void update(@PathVariable("idCar") Integer idCar, @PathVariable("idRent") Integer idRent, @RequestBody RentDto rentDto) throws NotFoundException {
 		CarEntity c = carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
 		CarDto carDto = new CarDto(c.getId(), c.getModel(), c.getBrand(), c.getUser(), c.getRent());
-		RentEntity rent = carDto.getRent().get(idCar);
-		rent.setIdRent(idRent);
-		rentService.actualizar(rent);
+		RentEntity r = rentDtoToEntityMapper.map(rentDto);
+		carDto.getRent().add(r);
+		r.setIdRent(idRent);
+		rentService.actualizar(r);
 	}
 	
 	/**
-	 * Método para crear un alquiler en la base de datos
+	 * Método para crear un alquiler relacionado con un coche
 	 * @param idCar
 	 * @param rentDto
-	 * @return Devuelve el CarDto actualizado 
+	 * @return Devuelve el elquiler creado
 	 * @throws NotFoundException 
 	 */
 	@PostMapping
 	public RentDto create(@PathVariable("idCar") Integer idCar, @RequestBody RentDto rentDto) throws NotFoundException {
-		//carService.buscar(idCar).orElseThrow(() -> new NotFoundException("Coche con ID "+idCar+" no encontrado"));
 		return rentEntityToDtoMapper.map(rentService.guardarRentCar(rentDtoToEntityMapper.map(rentDto), idCar));
 	}
 	
 	/**
-	 * Método para borrar un alquiler de la base de datos por id
+	 * Método para borrar un alquiler relacionado con un coche
 	 * @param idCar
 	 * @param idRent
 	 * @throws NotFoundException 

@@ -8,7 +8,9 @@ import com.renting.renting.entity.UserEntity;
 public class RentDto {
 	
 	private Integer idRent;
+	//@JsonManagedReference
 	private UserEntity user;
+	//@JsonManagedReference
 	private CarEntity car;
 	private Date initDate;
 	private Date finalDate;

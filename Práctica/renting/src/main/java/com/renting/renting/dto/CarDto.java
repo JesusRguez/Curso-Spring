@@ -11,7 +11,9 @@ public class CarDto {
 	private Integer id;
 	private String model;
 	private String brand;
+	//@JsonBackReference
 	private UserEntity user;
+	//@JsonBackReference
 	private List<RentEntity> rents = new ArrayList<>();
 	
 	/**

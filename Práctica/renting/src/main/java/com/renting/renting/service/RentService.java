@@ -17,9 +17,23 @@ public interface RentService {
 	 */
 	public RentEntity guardar(RentEntity r);
 	
+	/**
+	 * Método para guardar un coche dentro de un RentEntity
+	 * @param r
+	 * @param idCar
+	 * @return Devuelve el RentEntity modificado
+	 * @throws NotFoundException
+	 */
 	public RentEntity guardarRentCar(RentEntity r, Integer idCar) throws NotFoundException;
 	
-	public RentEntity guardarRentUser(RentEntity r, Integer idUser);
+	/**
+	 * Método para guardar un usuario dentro de un RentEntity
+	 * @param r
+	 * @param idUser
+	 * @return Devuelve el RentEntity modificado
+	 * @throws NotFoundException
+	 */
+	public RentEntity guardarRentUser(RentEntity r, Integer idUser) throws NotFoundException;
 	
 	/**
 	 * Método para buscar un RentEntity por id en la base de datos

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.renting.renting.entity.CarEntity;
-import com.renting.renting.entity.RentEntity;
+import com.renting.renting.exception.NotFoundException;
 
 public interface CarService {
 
@@ -17,7 +17,23 @@ public interface CarService {
 	 */
 	public CarEntity guardar(CarEntity c);
 	
-	public void guardarRent(CarEntity c, RentEntity r);
+	/**
+	 * Método para guardar un alquiler dentro de un CarEntity
+	 * @param c
+	 * @param idRent
+	 * @return Devuelve el CarEntity modificado
+	 * @throws NotFoundException
+	 */
+	public CarEntity guardarRent(CarEntity c, Integer idRent) throws NotFoundException;
+	
+	/**
+	 * Método para guardar un usuario dentro de un CarEntity
+	 * @param c
+	 * @param idUser
+	 * @return Devuelve el CarEntity modificado
+	 * @throws NotFoundException
+	 */
+	public CarEntity guardarUser(CarEntity c, Integer idUser) throws NotFoundException;
 	
 	/**
 	 * Método para buscar un CarEntity por id en la base de datos

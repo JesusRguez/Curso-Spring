@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name ="Car")
 public class CarEntity {
@@ -22,8 +25,12 @@ public class CarEntity {
 	private String model;
 	private String brand;
 	@ManyToOne(fetch = FetchType.LAZY)
+	//@JsonBackReference
+	@JsonIgnore
 	private UserEntity user;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+	//@JsonBackReference
+	@JsonIgnore
 	private List<RentEntity> rents = new ArrayList<>();
 	
 	/**
@@ -115,6 +122,7 @@ public class CarEntity {
 	 * Método para obtener el alquiler
 	 * @return Devuelve el alquiler de un coche
 	 */
+	@JsonIgnore
 	public List<RentEntity> getRent() {
 		return rents;
 	}
@@ -123,6 +131,7 @@ public class CarEntity {
 	 * Método para establecer el alquiler de un coche
 	 * @param rent
 	 */
+	@JsonProperty
 	public void setRent(List<RentEntity> rent) {
 		this.rents = rent;
 	}

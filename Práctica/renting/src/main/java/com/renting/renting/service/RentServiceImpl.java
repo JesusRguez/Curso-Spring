@@ -9,15 +9,18 @@ import org.springframework.stereotype.Service;
 
 import com.renting.renting.entity.CarEntity;
 import com.renting.renting.entity.RentEntity;
+import com.renting.renting.entity.UserEntity;
 import com.renting.renting.exception.NotFoundException;
 import com.renting.renting.repository.CarRepository;
 import com.renting.renting.repository.RentRepository;
+import com.renting.renting.repository.UserRepository;
 
 @Service
 public class RentServiceImpl implements RentService{
 	
 	@Autowired RentRepository rentRepository;
 	@Autowired CarRepository carRepository;
+	@Autowired UserRepository userRepository;
 
 	@Override
 	public RentEntity guardar(RentEntity r) {
@@ -56,8 +59,11 @@ public class RentServiceImpl implements RentService{
 	}
 
 	@Override
-	public RentEntity guardarRentUser(RentEntity r, Integer idUser) {
-		// TODO Auto-generated method stub
-		return null;
+	public RentEntity guardarRentUser(RentEntity r, Integer idUser) throws NotFoundException {
+		UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NotFoundException("Usuario con ID "+idUser+" no encontrado"));
+		r.setUser(user);
+		user.getRent().add(r);
+		userRepository.save(user);
+		return rentRepository.save(r);
 	}
 }

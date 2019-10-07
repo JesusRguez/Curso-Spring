@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name ="User")
 public class UserEntity {
@@ -20,8 +23,12 @@ public class UserEntity {
 	private String name;
 	private Integer age;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	///@JsonBackReference
+	@JsonIgnore
 	private List<CarEntity> cars = new ArrayList<>();
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	//@JsonBackReference
+	@JsonIgnore
 	private List<RentEntity> rent = new ArrayList<>();
 
 	/**
@@ -96,6 +103,7 @@ public class UserEntity {
 	 * Método para obtener el coche
 	 * @return Devuelve el coche de un usuario
 	 */
+	@JsonIgnore
 	public List<CarEntity> getCar() {
 		return cars;
 	}
@@ -104,6 +112,7 @@ public class UserEntity {
 	 * Método para establecer el coche de un usuario
 	 * @param car
 	 */
+	@JsonProperty
 	public void setCar(List<CarEntity> cars) {
 		this.cars = cars;
 	}
@@ -112,6 +121,7 @@ public class UserEntity {
 	 * Método para obtener el alquiler
 	 * @return Devuelve el alquiler de un usuario
 	 */
+	@JsonIgnore
 	public List<RentEntity> getRent() {
 		return rent;
 	}
@@ -120,6 +130,7 @@ public class UserEntity {
 	 * Método para establecer el alquiler de un usuario
 	 * @param rent
 	 */
+	@JsonProperty
 	public void setRent(List<RentEntity> rent) {
 		this.rent = rent;
 	}

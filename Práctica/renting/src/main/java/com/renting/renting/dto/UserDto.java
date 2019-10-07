@@ -11,7 +11,9 @@ public class UserDto {
 	private Integer id;
 	private String name;
 	private Integer age;
+	//@JsonBackReference
 	private List<CarEntity> cars = new ArrayList<>();
+	//@JsonBackReference
 	private List<RentEntity> rents = new ArrayList<>();
 
 	/**

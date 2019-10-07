@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.renting.renting.entity.UserEntity;
+import com.renting.renting.exception.NotFoundException;
 import com.renting.renting.exception.ValidationException;
 
 
@@ -17,6 +18,24 @@ public interface UserService {
 	 * @throws ValidationException 
 	 */
 	public UserEntity guardar(UserEntity u) throws ValidationException;
+	
+	/**
+	 * Método para guardar un coche dentro de un UserEntity
+	 * @param u
+	 * @param idCar
+	 * @return Devuelve el UserEntity modificado
+	 * @throws NotFoundException
+	 */
+	public UserEntity guardarCar(UserEntity u, Integer idCar) throws NotFoundException;
+	
+	/**
+	 * Método para guardar un alquiler dentro de un UserEntity
+	 * @param u
+	 * @param idRent
+	 * @return Devuelve el UserEntity modificado
+	 * @throws NotFoundException
+	 */
+	public UserEntity guardarRent(UserEntity u, Integer idRent) throws NotFoundException;
 	
 	/**
 	 * Método para buscar un UserEntity por id en la base de datos
